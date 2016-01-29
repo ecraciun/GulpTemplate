@@ -12,7 +12,8 @@ var gulp        = require('gulp'),
     uglify      = require('gulp-uglify'),
     rename      = require('gulp-rename'),
     filesize    = require('gulp-filesize'),
-    changed     = require('gulp-changed');
+    changed     = require('gulp-changed'),
+    cssnano     = require('gulp-cssnano');
     //watch       = require('gulp-watch');
     //ts      = require('gulp-typescript');
     
@@ -23,6 +24,11 @@ gulp.task('less', function(cb) {
         .pipe(less({
             paths: [ path.join(__dirname, 'less', 'includes') ]
         }))
+        .pipe(concat('site.css'))
+        .pipe(gulp.dest('./client/css'))
+        .pipe(filesize())
+        .pipe(cssnano())
+        .pipe(rename('site.min.css'))
         .pipe(gulp.dest('./client/css'))
         .on('error', gutil.log);
 });
