@@ -13,7 +13,8 @@ var gulp        = require('gulp'),
     rename      = require('gulp-rename'),
     filesize    = require('gulp-filesize'),
     changed     = require('gulp-changed'),
-    cssnano     = require('gulp-cssnano');
+    cssnano     = require('gulp-cssnano'),
+    browserSync = require('browser-sync').create();
     //watch       = require('gulp-watch');
     //ts      = require('gulp-typescript');
     
@@ -30,10 +31,15 @@ gulp.task('less', function(cb) {
         .pipe(cssnano())
         .pipe(rename('site.min.css'))
         .pipe(gulp.dest('./client/css'))
+        .pipe(browserSync.reload({
+            stream: true
+        }))
         .on('error', gutil.log);
 });
 
-gulp.task('watch:less', function() {
+gulp.task('watch', ['watch:less']);
+
+gulp.task('watch:less', ['browserSync', 'less'], function() {
     gulp.watch('./client/less/**/*.less', ['less']);
 });
 
@@ -58,3 +64,12 @@ gulp.task('concat-libs', function() {
     .pipe(filesize())
     .on('error', gutil.log);
 });
+
+
+gulp.task('browserSync', function() {
+  browserSync.init({
+    server: {
+      baseDir: './server'
+    },
+  })
+})
