@@ -14,13 +14,14 @@ var gulp        = require('gulp'),
     filesize    = require('gulp-filesize'),
     changed     = require('gulp-changed'),
     cssnano     = require('gulp-cssnano'),
-    browserSync = require('browser-sync').create();
+    browserSync = require('browser-sync').create(),
+    nodemon = require('gulp-nodemon');
     //watch       = require('gulp-watch');
     //ts      = require('gulp-typescript');
     
     
 gulp.task('less', function(cb) {
-    return gulp.src('./client/less/**/*.less')
+    return gulp.src('./client/css/**/*.less')
         .pipe(changed('./client/css'))
         .pipe(less({
             paths: [ path.join(__dirname, 'less', 'includes') ]
@@ -37,9 +38,17 @@ gulp.task('less', function(cb) {
         .on('error', gutil.log);
 });
 
-gulp.task('watch', ['watch:less']);
+gulp.task('reloadOnJs', function(cb){
+   return browserSync.reload({ stream: true }); 
+});
 
-gulp.task('watch:less', ['browserSync', 'less'], function() {
+gulp.task('watch:js', ['reloadOnJs'], function(cb){
+   gulp.watch('./client/app/**/*.js'); 
+});
+
+gulp.task('watch', ['watch:less', 'watch:js']);
+
+gulp.task('watch:less', ['less'], function() {
     gulp.watch('./client/less/**/*.less', ['less']);
 });
 
@@ -66,10 +75,39 @@ gulp.task('concat-libs', function() {
 });
 
 
-gulp.task('browserSync', function() {
-  browserSync.init({
-    server: {
-      baseDir: './server'
-    },
-  })
-})
+// gulp.task('browserSync', function() {
+//   browserSync.init({
+//     server: {
+//       baseDir: './server'
+//     },
+//   })
+// })
+
+gulp.task('nodemon', function (cb) {
+	
+	var started = false;
+	
+	return nodemon({
+		script: './server/app.js'
+	}).on('start', function () {
+		// to avoid nodemon being started multiple times
+		// thanks @matthisk
+		if (!started) {
+			cb();
+			started = true; 
+		} 
+	});
+});
+
+
+gulp.task('default', ['browser-sync', 'watch'], function () {
+});
+
+gulp.task('browser-sync', ['nodemon'], function() {
+	browserSync.init(null, {
+		proxy: "http://localhost:3000",
+        files: ["./client/**/*.*"],
+        browser: "google chrome",
+        port: 7000,
+	});
+});
