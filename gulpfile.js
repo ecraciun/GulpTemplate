@@ -22,7 +22,7 @@ var gulp        = require('gulp'),
     
 gulp.task('less', function(cb) {
     return gulp.src('./client/css/**/*.less')
-        .pipe(changed('./client/css'))
+        //.pipe(changed('./client/css'))
         .pipe(less({
             paths: [ path.join(__dirname, 'less', 'includes') ]
         }))
@@ -49,7 +49,7 @@ gulp.task('watch:js', ['reloadOnJs'], function(cb){
 gulp.task('watch', ['watch:less', 'watch:js']);
 
 gulp.task('watch:less', ['less'], function() {
-    gulp.watch('./client/less/**/*.less', ['less']);
+    gulp.watch('./client/css/**/*.less', ['less']);
 });
 
 gulp.task('clean', function (cb) {
