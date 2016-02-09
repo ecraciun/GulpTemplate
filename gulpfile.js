@@ -56,15 +56,14 @@ gulp.task('ts', function() {
 	return tsResult.js.pipe(gulp.dest('.'));
 });
 
-gulp.task('reloadOnJs', function(cb){
-   return browserSync.reload({ stream: true }); 
+gulp.task('watch:js', function(cb){
+   gulp.watch('./client/app/**/*.js').on('change', browserSync.reload); 
 });
 
-gulp.task('watch:js', ['reloadOnJs'], function(cb){
-   gulp.watch('./client/app/**/*.js'); 
+gulp.task('watch:ejs', function(cb){
+   //gulp.watch('./server/views/**/*.ejs', ['reload']); 
+   gulp.watch('./server/views/**/*.ejs').on('change', browserSync.reload); 
 });
-
-gulp.task('watch', ['watch:less', 'watch:js', 'watch:ts']);
 
 gulp.task('watch:less', ['less'], function() {
     gulp.watch('./client/css/**/*.less', ['less']);
@@ -105,6 +104,8 @@ gulp.task('concat-libs', function() {
 //     },
 //   })
 // })
+
+gulp.task('watch', ['watch:less', 'watch:js', 'watch:ts', 'watch:ejs']);
 
 gulp.task('nodemon', function (cb) {
 	

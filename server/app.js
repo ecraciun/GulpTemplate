@@ -3,7 +3,6 @@ var path = require("path");
 var http = require("http");
 var bodyParser = require("body-parser");
 var errorHandler = require("errorhandler");
-var index = require('./routes/index');
 var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -13,8 +12,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 // Routes
 app.use('/assets', express.static(__dirname + '/../client'));
-app.get('/', index.index);
+//app.get('/', index.index);
 //app.use('/', index.index);
+app.get('/', function (req, res, next) {
+    res.render('index', { title: 'Express' });
+});
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     var err = new Error('404 Not Found');
@@ -80,5 +82,4 @@ function onListening() {
         : 'port ' + addr.port;
     console.log('Listening on ' + bind);
 }
-console.log("Started and live recompilation works! No more bla.");
 exports.App = app;

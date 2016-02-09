@@ -20,9 +20,12 @@ app.use(bodyParser.json());
 // Routes
 
 app.use('/assets', express.static(__dirname + '/../client'));
-app.get('/', index.index);
+//app.get('/', index.index);
 //app.use('/', index.index);
 
+app.get('/', function(req, res, next) {
+    res.render('index', { title: 'Express' });
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -109,7 +112,5 @@ function onListening() {
     : 'port ' + addr.port;
   console.log('Listening on ' + bind);
 }
-
-console.log("Started and live recompilation works! No more bla.");
 
 export var App = app;
