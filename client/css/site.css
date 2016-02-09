@@ -6,4 +6,10 @@ h1 {
 }
 .row {
   padding: 20px;
+  width: 100%;
+}
+footer {
+  bottom: 12px;
+  position: absolute;
+  left: 45%;
 }
