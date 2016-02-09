@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-var index = require('./routes/index');
+var index = require('./routes/index_js');
 var http = require('http');
 
 
@@ -110,3 +110,5 @@ function onListening() {
 }
 
 //module.exports = app;
+
+console.log("Started!");
