@@ -15,13 +15,20 @@ var gulp        = require('gulp'),
     changed     = require('gulp-changed'),
     cssnano     = require('gulp-cssnano'),
     browserSync = require('browser-sync').create(),
-    nodemon = require('gulp-nodemon');
+    nodemon     = require('gulp-nodemon'),
+    plumber     = require('gulp-plumber'),
+    filter      = require('gulp-filter');
     //watch       = require('gulp-watch');
     //ts      = require('gulp-typescript');
     
     
 gulp.task('less', function(cb) {
     return gulp.src('./client/css/**/*.less')
+        // .pipe(filter(function (file) {
+        //     console.log("File event: " + file.event);
+        //     return file.event === "change";
+        // }))
+        .pipe(plumber())
         //.pipe(changed('./client/css'))
         .pipe(less({
             paths: [ path.join(__dirname, 'less', 'includes') ]

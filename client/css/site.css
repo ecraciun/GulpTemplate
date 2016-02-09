@@ -1,6 +1,9 @@
 h1 {
   font-weight: bold;
-  color: blue !important;
+  color: red !important;
   background-color: lightblue;
   text-align: center;
+}
+.row {
+  padding: 20px;
 }
