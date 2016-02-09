@@ -17,7 +17,9 @@ var gulp        = require('gulp'),
     browserSync = require('browser-sync').create(),
     nodemon     = require('gulp-nodemon'),
     plumber     = require('gulp-plumber'),
-    filter      = require('gulp-filter');
+    filter      = require('gulp-filter'),
+    ts          = require('gulp-typescript'),
+    tsProject   = ts.createProject('tsconfig.json');
     //watch       = require('gulp-watch');
     //ts      = require('gulp-typescript');
     
@@ -46,6 +48,14 @@ gulp.task('less', function(cb) {
         .on('error', gutil.log);
 });
 
+
+gulp.task('ts', function() {
+	var tsResult = tsProject.src() // instead of gulp.src(...) 
+		.pipe(ts(tsProject));
+	
+	return tsResult.js.pipe(gulp.dest('.'));
+});
+
 gulp.task('reloadOnJs', function(cb){
    return browserSync.reload({ stream: true }); 
 });
@@ -54,10 +64,14 @@ gulp.task('watch:js', ['reloadOnJs'], function(cb){
    gulp.watch('./client/app/**/*.js'); 
 });
 
-gulp.task('watch', ['watch:less', 'watch:js']);
+gulp.task('watch', ['watch:less', 'watch:js', 'watch:ts']);
 
 gulp.task('watch:less', ['less'], function() {
     gulp.watch('./client/css/**/*.less', ['less']);
+});
+
+gulp.task('watch:ts', ['ts'], function() {
+    gulp.watch('./**/*.ts', ['ts']);
 });
 
 gulp.task('clean', function (cb) {
