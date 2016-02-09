@@ -16,7 +16,7 @@ app.use('/assets', express.static(__dirname + '/../client'));
 app.use('/', index);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-    var err = new Error('404 Not Found');
+    var err = new Error(`404 Not Found (${req.url})`);
     next(err);
 });
 // error handlers
