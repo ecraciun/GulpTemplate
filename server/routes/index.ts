@@ -1,13 +1,9 @@
 import express = require("express");
+var router = express.Router();
 
-export function index(req: express.Request, res: express.Response) {
-    var router = express.Router();
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
 
-    console.log("Request: " + JSON.stringify(req.url));
-        
-    /* GET home page. */
-    router.get('/', function(req, res, next) {
-        //res.render('index', { title: 'Express' });
-        res.write("Hello world!");
-    });
-};
+export = router;
