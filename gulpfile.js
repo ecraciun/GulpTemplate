@@ -33,6 +33,7 @@ gulp.task('less', function(cb) {
         .pipe(less({
             paths: [ path.join(__dirname, 'less', 'includes') ]
         }))
+        .on('error', gutil.log)
         .pipe(concat('site.css'))
         .pipe(gulp.dest('./client/css'))
         .pipe(filesize())
@@ -71,6 +72,7 @@ gulp.task('clean', function (cb) {
 
 gulp.task('concat-libs', function() {  
   return gulp.src('./client/app/libs/**/*.js')
+    .pipe(plumber())
     .pipe(concat('libs.js'))
     .pipe(gulp.dest('./client/app'))
     .pipe(filesize())

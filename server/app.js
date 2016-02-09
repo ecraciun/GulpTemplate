@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-var routes = require('./routes/index');
+var index = require('./routes/index');
 var http = require('http');
 
 
@@ -12,7 +12,7 @@ app.set('view engine', 'ejs');
 
 
 app.use('/assets', express.static(__dirname + '/../client'));
-app.use('/', routes);
+app.use('/', index);
 
 
 // catch 404 and forward to error handler
