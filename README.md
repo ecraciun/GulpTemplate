@@ -37,6 +37,4 @@ some freaking code right here
 **bold stuff**
 
 
-# Are these comments?!
-
 [Node.js]: <http://nodejs.org> "Node.js"
