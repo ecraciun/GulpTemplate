@@ -1,33 +1,6 @@
-import * as express from "express";
-import * as path from "path";
 import * as http from "http";
-import * as bodyParser from "body-parser";
+import * as app from "./appConfig";
 import errorHandler = require("errorhandler");
-
-import * as index from './routes/index';
-
-
-var app = express();
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-//app.set('view options', { layout: false });
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-// Routes
-
-app.use('/assets', express.static(__dirname + '/../client'));
-app.use('/', index);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('404 Not Found');
-  next(err);
-});
-
 
 // error handlers
 

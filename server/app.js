@@ -1,24 +1,6 @@
-var express = require("express");
-var path = require("path");
 var http = require("http");
-var bodyParser = require("body-parser");
+var app = require("./appConfig");
 var errorHandler = require("errorhandler");
-var index = require('./routes/index');
-var app = express();
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-//app.set('view options', { layout: false });
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-// Routes
-app.use('/assets', express.static(__dirname + '/../client'));
-app.use('/', index);
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-    var err = new Error(`404 Not Found (${req.url})`);
-    next(err);
-});
 // error handlers
 var env = process.env.NODE_ENV || 'development';
 if (env === 'development') {
