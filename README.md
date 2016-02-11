@@ -59,6 +59,7 @@ Just navigate to the project's root folder with your console and run these comma
 ```sh
 $ npm install
 $ bower install
+$ typings install
 $ gulp start
 ```
 

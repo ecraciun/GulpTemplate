@@ -21,11 +21,12 @@ coverage
 .lock-wscript
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
+dist
 
 # Dependency directory
 node_modules
 bower_components
+typings
 
 # Optional npm cache directory
 .npm
