@@ -1,0 +1,28 @@
+{
+  "name": "gulptemplate",
+  "description": "gulp common tasks for personal node.js projects",
+  "main": "app.js",
+  "authors": [
+    "Emil Craciun"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "gulp"
+  ],
+  "moduleType": [
+    "es6",
+    "node"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "moment": "^2.11.2"
+  }
+}

@@ -41,6 +41,7 @@ $ npm install gulp -g
 $ npm install typescript -g
 $ npm install typings -g
 $ npm install nodemon -g
+$ npm install bower -g
 ```
 *Yes, yes, you could combine them all into a single command and use the shorthand "i" argument instead of "install"*
 
@@ -49,6 +50,7 @@ $ npm install nodemon -g
 >- [Typescript]
 >- [Nodemon]
 >- [Typings]
+>- [Bower]
 
 
 ### The actual project
@@ -56,6 +58,7 @@ $ npm install nodemon -g
 Just navigate to the project's root folder with your console and run these commands:
 ```sh
 $ npm install
+$ bower install
 $ gulp start
 ```
 
@@ -67,6 +70,7 @@ You should see any change almost instantly in your browser.
 
 *Not necessarily in this order. These are just some ideas so I don't forget.*
 
+- freaking use [Bower] for UI packages
 - add unit tests for server side code
 - add unit tests for client side code
 - make a build task to compile, concatenate, minify, and copy everything in the *dist* folder
@@ -104,3 +108,4 @@ But I do accept constructive feedback and suggestions.
 [POD]: <https://github.com/yyx990803/pod>
 [Codeship]: <https://codeship.com/>
 [Yeoman]: <http://yeoman.io/>
+[Bower]: <http://bower.io/>
