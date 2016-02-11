@@ -1,4 +1,5 @@
-# GulpTemplate
+# GulpTemplate 
+[ ![Codeship Status for ecraciun/GulpTemplate](https://codeship.com/projects/7ecf3920-b2fd-0133-7ecc-4a6e91c1fec7/status?branch=master)](https://codeship.com/projects/133539)
 
 Gulp common tasks for my node.js projects packed in a "template" starter web project.
 This is just going to grow over time, I hope in quality and features.
@@ -40,9 +41,8 @@ $ npm install gulp -g
 $ npm install typescript -g
 $ npm install typings -g
 $ npm install nodemon -g
-
-*Yes, yes, you could combine them all into a single command and use the shorthand "i" argument instead of "install"*
 ```
+*Yes, yes, you could combine them all into a single command and use the shorthand "i" argument instead of "install"*
 
 >**Here are the links if you want to learn more**
 >- [Gulp]
