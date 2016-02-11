@@ -74,7 +74,7 @@ gulp.task('watch:ts', ['ts'], function() {
 });
 
 gulp.task('clean', function (cb) {
-    rimraf('./build/', cb);
+    rimraf('./dist/', cb);
  
 //   return gulp.src('./**/*.js', { read: false }) // much faster
 //   .pipe(ignore('node_modules/**'))
