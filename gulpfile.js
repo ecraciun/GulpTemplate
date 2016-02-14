@@ -33,10 +33,11 @@ var gulp        = require('gulp'),
 
 gulp.task('start', function (cb) {
     runSequence(
+        ['css:libs:dev', 'js:libs:dev'],
+        ['less', 'ts'],
+        'build-dev-html',
         'browser-sync',
         'watch',
-        ['css:libs:dev', 'js:libs:dev'],
-        'build-dev-html',
         cb
     );
 });
@@ -118,12 +119,12 @@ gulp.task('watch:html', function(cb){
 });
 
 
-gulp.task('watch:less', ['less'], function() {
+gulp.task('watch:less', function() {
     gulp.watch('./client/css/**/*.less', ['less']);
 });
 
 
-gulp.task('watch:ts', ['ts'], function() {
+gulp.task('watch:ts', function() {
     gulp.watch('./**/*.ts', ['ts']);
 });
 
@@ -144,8 +145,8 @@ gulp.task('js:libs:dev', function(cb){
 
 gulp.task('build-dev-html', function(){  
     return gulp.src('./client/index.html')
-        .pipe(inject(gulp.src('./client/css/**/*.css', {read:false}), {relative: true})) // css app files  
-        .pipe(inject(gulp.src('./client/app/**/*.js', {read: false}), {relative: true})) // js app files  
+        .pipe(inject(gulp.src('./client/css/**/*.css', { read:false }), { relative: true, addPrefix: 'assets' })) // css app files  
+        .pipe(inject(gulp.src('./client/app/**/*.js', { read: false }), { relative: true, addPrefix: 'assets' })) // js app files  
         .pipe(gulp.dest('./client/'));
 });
 

@@ -16,9 +16,8 @@ I'm new to the whole MEAN stack so I'm taking one step at the time, starting wit
 ## Current features
 
 - typescript on server side code
-- less compilation task that also combines all resulting css into one single file and creates a minified version of it
-- working browser-sync
-- one awesome development gulp task that runs the server, watches and compiles less, typescript files and reloads the browser
+- build for production task *$ gulp build:prod*
+- one awesome development gulp task that runs the server, watches and compiles less, typescript files, brings all library components from bower folder, injects every .css and .js file inside the index.html file  and reloads the browser
 
 
 *Behind the scene features:*
@@ -71,11 +70,9 @@ You should see any change almost instantly in your browser.
 
 *Not necessarily in this order. These are just some ideas so I don't forget.*
 
-- freaking use [Bower] for UI packages
 - add unit tests for server side code
 - add unit tests for client side code
-- make a build task to compile, concatenate, minify, and copy everything in the *dist* folder
-- maybe think everything as a single page application and just have a single *index.html* file in which references to assets are injected by a task? (and just have an API on the server side)
+- maybe think everything as a single page application and just have a single *index.html*? (and just have an API on the server side and/or pre-rendered html)
 - add angular 2 and make it work (**whooohooo!**)
 - implement logging
 - maybe have somne kind of an [Application Insights] thingy but for the used technologies and environment
