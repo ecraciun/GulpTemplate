@@ -17,12 +17,20 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "bower_components",
     "test",
     "tests"
   ],
   "dependencies": {
     "bootstrap": "^3.3.6",
     "moment": "^2.11.2"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "dist/css/bootstrap.css",
+        "dist/js/bootstrap.js"
+      ],
+      "dependencies": []
+    }
   }
 }

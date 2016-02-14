@@ -19,29 +19,60 @@ var gulp        = require('gulp'),
     plumber     = require('gulp-plumber'),
     filter      = require('gulp-filter'),
     ts          = require('gulp-typescript'),
-    tsProject   = ts.createProject('tsconfig.json');
-    //watch       = require('gulp-watch');
-    //ts      = require('gulp-typescript');
+    tsProject   = ts.createProject('tsconfig.json'),
+    bowerFiles  = require('main-bower-files'),
+    rev         = require('gulp-rev'),
+    runSequence = require('run-sequence'),
+    inject      = require('gulp-inject');
     
     
+// ############### DEVELOPMENT TASKS ###############
+
+gulp.task('start', ['browser-sync', 'watch'], function () {
+});
+
+
+gulp.task('watch', ['watch:less', 'watch:js', 'watch:ts', 'watch:ejs']);
+
+
+gulp.task('browser-sync', ['nodemon'], function() {
+	browserSync.init(null, {
+		proxy: "http://localhost:3000",
+        files: ["./client/**/*.*"],
+        browser: "google chrome",
+        port: 7000,
+	});
+});
+
+
+gulp.task('nodemon', function (cb) {	
+	var started = false;
+	return nodemon({
+		script: './server/app.js'
+	}).on('start', function () {
+		// to avoid nodemon being started multiple times
+		// thanks @matthisk
+		if (!started) {
+			cb();
+			started = true; 
+		} 
+	});
+});
+
+
 gulp.task('less', function(cb) {
     return gulp.src('./client/css/**/*.less')
-        // .pipe(filter(function (file) {
-        //     console.log("File event: " + file.event);
-        //     return file.event === "change";
-        // }))
         .pipe(plumber())
-        //.pipe(changed('./client/css'))
         .pipe(less({
             paths: [ path.join(__dirname, 'less', 'includes') ]
         }))
         .on('error', gutil.log)
         .pipe(concat('site.css'))
         .pipe(gulp.dest('./client/css'))
-        .pipe(filesize())
-        .pipe(cssnano())
-        .pipe(rename('site.min.css'))
-        .pipe(gulp.dest('./client/css'))
+        //.pipe(filesize())
+        //.pipe(cssnano())
+        //.pipe(rename('site.min.css'))
+        //.pipe(gulp.dest('./client/css'))
         .pipe(browserSync.reload({
             stream: true
         }))
@@ -56,32 +87,26 @@ gulp.task('ts', function() {
 	return tsResult.js.pipe(gulp.dest('.'));
 });
 
+
 gulp.task('watch:js', function(cb){
    gulp.watch('./client/app/**/*.js').on('change', browserSync.reload); 
 });
 
+
 gulp.task('watch:ejs', function(cb){
-   //gulp.watch('./server/views/**/*.ejs', ['reload']); 
    gulp.watch('./server/views/**/*.ejs').on('change', browserSync.reload); 
 });
+
 
 gulp.task('watch:less', ['less'], function() {
     gulp.watch('./client/css/**/*.less', ['less']);
 });
 
+
 gulp.task('watch:ts', ['ts'], function() {
     gulp.watch('./**/*.ts', ['ts']);
 });
 
-gulp.task('clean', function (cb) {
-    rimraf('./dist/', cb);
- 
-//   return gulp.src('./**/*.js', { read: false }) // much faster
-//   .pipe(ignore('node_modules/**'))
-//   .pipe(rimraf());
-  
-});
-// 
 
 gulp.task('concat-libs', function() {  
   return gulp.src('./client/app/libs/**/*.js')
@@ -97,41 +122,110 @@ gulp.task('concat-libs', function() {
 });
 
 
-// gulp.task('browserSync', function() {
-//   browserSync.init({
-//     server: {
-//       baseDir: './server'
-//     },
-//   })
-// })
 
-gulp.task('watch', ['watch:less', 'watch:js', 'watch:ts', 'watch:ejs']);
 
-gulp.task('nodemon', function (cb) {
-	
-	var started = false;
-	
-	return nodemon({
-		script: './server/app.js'
-	}).on('start', function () {
-		// to avoid nodemon being started multiple times
-		// thanks @matthisk
-		if (!started) {
-			cb();
-			started = true; 
-		} 
-	});
+// ############### PRODUCTION TASKS ###############
+    
+gulp.task('build:prod', function(cb){
+    runSequence(
+        'clean',
+        ['less:prod', 'css:libs:prod', 'js:libs:prod', 'ts:prod'],
+        ['copy-package.json', 'copy-bootstrap-fonts', 'copy-views', 'copy-html'],
+        'build-prod-html',
+        cb
+    );
+});
+
+    
+gulp.task('less:prod', function(cb) {
+    return gulp.src('./client/css/**/*.less')
+        .pipe(plumber())
+        .pipe(less({
+            paths: [ path.join(__dirname, 'less', 'includes') ]
+        }))
+        .on('error', gutil.log)
+        .pipe(concat('site.min.css'))
+        .pipe(cssnano())
+        .pipe(rev())
+        .pipe(gulp.dest('./dist/client/css'));
+});   
+
+
+gulp.task('css:libs:prod', function(cb){
+   return gulp.src(bowerFiles())
+        .pipe(filter(['*.css']))
+        .pipe(concat('libs.min.css'))
+        .pipe(cssnano())
+        .pipe(rev())
+        .pipe(gulp.dest('./dist/client/css'));
 });
 
 
-gulp.task('browser-sync', ['nodemon'], function() {
-	browserSync.init(null, {
-		proxy: "http://localhost:3000",
-        files: ["./client/**/*.*"],
-        browser: "google chrome",
-        port: 7000,
-	});
+gulp.task('js:libs:prod', function(cb){
+   return gulp.src(bowerFiles())
+        .pipe(filter(['*.js']))
+        .pipe(concat('libs.min.js'))
+        .pipe(uglify())
+        .pipe(rev())
+        .pipe(gulp.dest('./dist/client/app'));
 });
 
-gulp.task('start', ['browser-sync', 'watch'], function () {
+
+gulp.task('ts:prod', function() {
+	var tsResult = tsProject.src() // instead of gulp.src(...) 
+		.pipe(ts(tsProject));
+	
+	return tsResult.js.pipe(gulp.dest('./dist'));
+});
+
+
+gulp.task('copy-bootstrap-fonts', function(cb){
+    return gulp.src('./bower_components/bootstrap/dist/fonts/*.*')
+        .pipe(gulp.dest('./dist/client/fonts'));
+});
+
+
+gulp.task('copy-package.json', function(cb){
+   return gulp.src('./package.json')
+        .pipe(gulp.dest('./dist/')); 
+});
+
+
+gulp.task('copy-views', function(cb){
+   return gulp.src('./server/views/**/*.*')
+        .pipe(gulp.dest('./dist/server/views')); 
+});
+
+
+gulp.task('copy-html', function(cb){
+   return gulp.src('./client/**/*.html')
+        .pipe(gulp.dest('./dist/client')); 
+});
+
+
+gulp.task('build-prod-html', function(){
+    var localInject = function(pathGlob, name) {
+		var options = {
+        	ignorePath: '/dist/client/', // remove the '/dist/client' from the path           
+        	addRootSlash: true, // add a root slash to the beginning of the path
+            removeTags: true, // remove <--inject--> tags after injection
+            name: name || 'inject',
+            addPrefix: 'assets'
+		};
+		return inject(gulp.src(pathGlob, {read:false}), options);
+	};
+    
+    return gulp.src('./client/index.html')
+        .pipe(localInject('./dist/client/css/*.css')) // css files   
+        .pipe(localInject('./dist/client/app/*.js')) // js files            
+        .pipe(gulp.dest('./dist/client/'));
+});
+
+
+gulp.task('clean', function (cb) {
+    rimraf('./dist/', cb);
+    //   return gulp.src('./**/*.js', { read: false }) // much faster
+    //   .pipe(ignore('node_modules/**'))
+    //   .pipe(rimraf());
+  
 });
