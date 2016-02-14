@@ -24,15 +24,34 @@ var gulp        = require('gulp'),
     rev         = require('gulp-rev'),
     runSequence = require('run-sequence'),
     inject      = require('gulp-inject');
-    
-    
-// ############### DEVELOPMENT TASKS ###############
 
-gulp.task('start', ['browser-sync', 'watch'], function () {
+    
+// #################################################
+// ############### DEVELOPMENT TASKS ###############
+// #################################################
+
+
+gulp.task('start', function (cb) {
+    runSequence(
+        'browser-sync',
+        'watch',
+        ['css:libs:dev', 'js:libs:dev'],
+        'build-dev-html',
+        cb
+    );
 });
 
 
-gulp.task('watch', ['watch:less', 'watch:js', 'watch:ts', 'watch:ejs']);
+gulp.task('build:dev', function(cb) {
+    runSequence(
+        ['less', 'ts'],
+        ['css:libs:dev', 'js:libs:dev'],
+        'build-dev-html',
+        cb);
+});
+
+
+gulp.task('watch', ['watch:less', 'watch:js', 'watch:ts', 'watch:ejs', 'watch:html']);
 
 
 gulp.task('browser-sync', ['nodemon'], function() {
@@ -69,10 +88,6 @@ gulp.task('less', function(cb) {
         .on('error', gutil.log)
         .pipe(concat('site.css'))
         .pipe(gulp.dest('./client/css'))
-        //.pipe(filesize())
-        //.pipe(cssnano())
-        //.pipe(rename('site.min.css'))
-        //.pipe(gulp.dest('./client/css'))
         .pipe(browserSync.reload({
             stream: true
         }))
@@ -98,6 +113,11 @@ gulp.task('watch:ejs', function(cb){
 });
 
 
+gulp.task('watch:html', function(cb){
+   gulp.watch('./client/**/*.html').on('change', browserSync.reload); 
+});
+
+
 gulp.task('watch:less', ['less'], function() {
     gulp.watch('./client/css/**/*.less', ['less']);
 });
@@ -108,23 +128,32 @@ gulp.task('watch:ts', ['ts'], function() {
 });
 
 
-gulp.task('concat-libs', function() {  
-  return gulp.src('./client/app/libs/**/*.js')
-    .pipe(plumber())
-    .pipe(concat('libs.js'))
-    .pipe(gulp.dest('./client/app'))
-    .pipe(filesize())
-    .pipe(uglify())
-    .pipe(rename('libs.min.js'))
-    .pipe(gulp.dest('./client/app'))
-    .pipe(filesize())
-    .on('error', gutil.log);
+gulp.task('css:libs:dev', function(cb){
+   return gulp.src(bowerFiles())
+        .pipe(filter(['*.css']))
+        .pipe(gulp.dest('./client/css'));
+});
+
+
+gulp.task('js:libs:dev', function(cb){
+   return gulp.src(bowerFiles())
+        .pipe(filter(['*.js']))
+        .pipe(gulp.dest('./client/app'));
+});
+
+
+gulp.task('build-dev-html', function(){  
+    return gulp.src('./client/index.html')
+        .pipe(inject(gulp.src('./client/css/**/*.css', {read:false}), {relative: true})) // css app files  
+        .pipe(inject(gulp.src('./client/app/**/*.js', {read: false}), {relative: true})) // js app files  
+        .pipe(gulp.dest('./client/'));
 });
 
 
 
-
+// ################################################
 // ############### PRODUCTION TASKS ###############
+// ################################################   
     
 gulp.task('build:prod', function(cb){
     runSequence(
