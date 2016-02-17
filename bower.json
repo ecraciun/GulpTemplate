@@ -1,7 +1,7 @@
 {
   "name": "gulptemplate",
   "description": "gulp common tasks for personal node.js projects",
-  "main": "app.js",
+  "main": "./server/app.js",
   "authors": [
     "Emil Craciun"
   ],
