@@ -134,7 +134,9 @@ $ start YOUR_NODE_APP_SERVICE_NAME
 
 *(to be continued, not yet done)*
 
-### Test 
+
+
+### Codeship: Test 
 
 ```sh
 nvm install 5.6
@@ -147,7 +149,7 @@ gulp build:prod
 # actual tests will come later, for now just build everything for production
 ```
 
-### Deployment
+### Codeship: Deployment
 
 I've set the branch to master.
 ```sh
