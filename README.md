@@ -65,6 +65,105 @@ The *start* task will start up browser sync and nodemon and you can begin coding
 You should see any change almost instantly in your browser.
 
 
+## Continuous Integration implemented using [Codeship]
+
+I'll just share how I've set up my Test & Deploy pipeline, because this might save you some time. 
+
+
+### Prerequisites
+
+I'm using an Ubuntu Server 14.04. You can download the latest version [here](http://www.ubuntu.com/download/server "Ubuntu server download").
+Mine is hosted on an A0 virtual machine instance size (just for testing) on [Microsoft Azure].
+
+#### Required programs
+
+Make sure you have the following installed:
+- nodejs *(dooh, you how else would you run your app?)*
+- upstart *(should come pre-installed by default, but it helps create a service that spins up your node app)*
+- [nginx] *(a HTTP and reverse proxy server)*
+
+#### Set up Codeship public SSH key
+
+Run this on your server:
+```sh
+$ mkdir -p ~/.ssh
+$ touch ~/.ssh/authorized_keys
+$ chmod -R go-rwx ~/.ssh/
+
+# add the Codeship public SSH key to ~/.ssh/authorized_keys
+# public SSH key can be found on your Codeship project's General Settings page
+$ editor ~/.ssh/authorized_keys
+``` 
+
+This will allow Codeship to run commands automatically on your server without a password.
+
+#### Set up service for your nodejs app
+
+```sh
+$ nano /etc/init/YOUR_NODE_APP_SERVICE_NAME.conf
+# enter your service configuration; mine looks something like this for now
+
+description "SOME DESCRIPTION"
+author "WHOEVER"
+
+start on (filesystem and net-device-up IFACE=lo)
+stop on shutdown
+
+
+respawn
+
+script
+
+        export HOME="/root"
+        env PORT=3000
+        env NODE_ENV=production
+
+        chdir /home/Mili/gulptemplate
+
+        #exec /usr/bin/npm install --production
+        exec /usr/bin/node /PATH/TO/NODEJS/APP/server/app.js >> /...../some_log.log
+end script
+```
+
+And then just start it using
+```sh
+$ start YOUR_NODE_APP_SERVICE_NAME
+```
+
+#### Set up nginx
+
+*(to be continued, not yet done)*
+
+### Test 
+
+```sh
+nvm install 5.6
+npm install typescript -g
+npm install gulp -g
+npm install bower -g
+bower install
+npm install
+gulp build:prod
+# actual tests will come later, for now just build everything for production
+```
+
+### Deployment
+
+I've set the branch to master.
+```sh
+scp -rp ./dist/* YOUR_USER@YOUR_SERVER:/PATH/TO/NODEJS/APP
+ssh YOUR_USER@YOUR_SERVER '/PATH/TO/AFTER_DEPLOYMENT_SCRIPT/after.sh'
+```
+
+Contents of *after.sh*:
+```sh
+#!/bin/bash
+
+cd /PATH/TO/NODEJS/APP
+npm install --production
+sudo restart YOUR_NODE_APP_SERVICE_NANE
+```
+
 ## Roadmap
 
 *Not necessarily in this order. These are just some ideas so I don't forget.*
@@ -102,3 +201,5 @@ But I do accept constructive feedback and suggestions.
 [Codeship]: <https://codeship.com/>
 [Yeoman]: <http://yeoman.io/>
 [Bower]: <http://bower.io/>
+[Microsoft Azure]: <https://azure.microsoft.com>
+[nginx]: <http://nginx.org/en/>
