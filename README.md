@@ -138,6 +138,8 @@ $ start YOUR_NODE_APP_SERVICE_NAME
 
 ### Codeship: Test 
 
+**Be sure you have the user you are using to connect via SSH in the sudoers group with no password. Use _visudo_ to edit the configuration file.**
+
 ```sh
 nvm install 5.6
 npm install typescript -g
