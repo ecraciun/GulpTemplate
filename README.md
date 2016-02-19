@@ -118,10 +118,10 @@ script
         env PORT=3000
         env NODE_ENV=production
 
-        chdir /home/Mili/gulptemplate
+        chdir /PATH/TO/NODEJS/APP
 
         #exec /usr/bin/npm install --production
-        exec /usr/bin/node /PATH/TO/NODEJS/APP/server/app.js >> /...../some_log.log
+        exec /usr/bin/nodemon /PATH/TO/NODEJS/APP/server/app.js >> /...../some_log.log
 end script
 ```
 
