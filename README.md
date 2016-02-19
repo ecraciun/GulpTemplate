@@ -132,9 +132,41 @@ $ start YOUR_NODE_APP_SERVICE_NAME
 
 #### Set up nginx
 
-*(to be continued, not yet done)*
+```sh
+# remove the default nginx site symlink to disable it, but keep the actual file close, it might help you 
+$ rm /etc/nginx/sites-enabled/default 
 
+# create a new configuration file for your app
+$ nano /etc/nginx/sites-available/node
 
+# this is my configuration file, yours might look different
+
+server {
+        listen 80;
+        listen [::]:80;
+
+        location / {
+                proxy_pass http://127.0.0.1:3000/;
+                proxy_redirect off;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+        }
+
+        location /assets/ {
+                alias /PATH/TO/NODEJS/APP/client/;
+                autoindex off;
+        }
+}
+
+# save and close
+
+$ ln -s /etc/nginx/sites-enabled/node /etc/nginx/sites-available/node 
+
+# restart nginx to reload the configuration
+$ restart nginx
+```
+
+And that's it! For now, I kept it simple. I will probably change a few things here and there, but I'll update the documentation when the time comes.
 
 ### Codeship: Test 
 
