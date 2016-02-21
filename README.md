@@ -207,10 +207,9 @@ sudo restart YOUR_NODE_APP_SERVICE_NANE
 - add unit tests for server side code
 - add unit tests for client side code
 - add authentication and authorization
-- add [MongoDB]
+- add [MongoDB] (needs to be configured)
 - maybe think everything as a single page application and just have a single *index.html*? (and just have an API on the server side and/or pre-rendered html)
 - add angular 2 and make it work (**whooohooo!**)
-- implement logging
 - maybe have somne kind of an [Application Insights] telemetry data gathering, but for the current setup
 - maybe make this as a [Yeoman] scaffolding template
 
