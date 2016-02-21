@@ -1,6 +1,8 @@
 import * as http from "http";
-import * as app from "./appConfig";
+import * as app from "./config/appConfig";
+import * as envConfig from "./config/envConfig";
 import errorHandler = require("errorhandler");
+import * as logger from './helpers/logger';
 
 // error handlers
 
@@ -26,7 +28,7 @@ function normalizePort(val) {
 }
 
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(envConfig.PORT);
 app.set('port', port);
 
 
@@ -46,27 +48,29 @@ server.on('listening', onListening);
  */
 
 function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
+    logger.error(error);
+    
+    if (error.syscall !== 'listen') {
+        throw error;
+    }
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+    var bind = typeof port === 'string'
+        ? 'Pipe ' + port
+        : 'Port ' + port;
 
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
+    // handle specific listen errors with friendly messages
+    switch (error.code) {
+        case 'EACCES':
+        logger.info(`${bind} requires elevated privileges`);
+        process.exit(1);
+        break;
+        case 'EADDRINUSE':
+        logger.info(`${bind} is already in use`);
+        process.exit(1);
+        break;
+        default:
+        throw error;
+    }
 }
 
 /**
@@ -76,9 +80,9 @@ function onError(error) {
 function onListening() {
   var addr = server.address();
   var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  console.log('Listening on ' + bind);
+    ? `pipe ${addr}`
+    : `port ${addr.port}`;
+  logger.info(`Listening on ${bind}`);
 }
 
 export var App = app;

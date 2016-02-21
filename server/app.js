@@ -1,6 +1,8 @@
 var http = require("http");
-var app = require("./appConfig");
+var app = require("./config/appConfig");
+var envConfig = require("./config/envConfig");
 var errorHandler = require("errorhandler");
+var logger = require('./helpers/logger');
 // error handlers
 var env = process.env.NODE_ENV || 'development';
 if (env === 'development') {
@@ -18,7 +20,7 @@ function normalizePort(val) {
     }
     return false;
 }
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(envConfig.PORT);
 app.set('port', port);
 var server = http.createServer(app);
 /**
@@ -31,6 +33,7 @@ server.on('listening', onListening);
  * Event listener for HTTP server "error" event.
  */
 function onError(error) {
+    logger.error(error);
     if (error.syscall !== 'listen') {
         throw error;
     }
@@ -40,11 +43,11 @@ function onError(error) {
     // handle specific listen errors with friendly messages
     switch (error.code) {
         case 'EACCES':
-            console.error(bind + ' requires elevated privileges');
+            logger.info(`${bind} requires elevated privileges`);
             process.exit(1);
             break;
         case 'EADDRINUSE':
-            console.error(bind + ' is already in use');
+            logger.info(`${bind} is already in use`);
             process.exit(1);
             break;
         default:
@@ -57,8 +60,8 @@ function onError(error) {
 function onListening() {
     var addr = server.address();
     var bind = typeof addr === 'string'
-        ? 'pipe ' + addr
-        : 'port ' + addr.port;
-    console.log('Listening on ' + bind);
+        ? `pipe ${addr}`
+        : `port ${addr.port}`;
+    logger.info(`Listening on ${bind}`);
 }
 exports.App = app;

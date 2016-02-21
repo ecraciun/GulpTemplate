@@ -1,8 +1,8 @@
 import * as express from "express";
 import * as path from "path";
 import * as bodyParser from "body-parser";
-
-import * as index from './routes/index';
+import * as logger from '../helpers/logger';
+import * as index from '../routes/index';
 
 
 var appConfig = express();
@@ -17,12 +17,13 @@ appConfig.use(bodyParser.json());
 
 // Routes
 
-appConfig.use('/assets', express.static(__dirname + '/../client'));
+appConfig.use('/assets', express.static(__dirname + '/../../client'));
 appConfig.use('/', index);
 
 // catch 404 and forward to error handler
 appConfig.use(function(req, res, next) {
   var err = new Error('404 Not Found: ' + req.url);
+  logger.info(err);
   next(err);
 });
 

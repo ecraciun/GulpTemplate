@@ -48,8 +48,10 @@
   },
   "dependencies": {
     "body-parser": "^1.14.2",
+    "bunyan": "^1.6.0",
     "ejs": "^2.4.1",
+    "errorhandler": "^1.4.3",
     "express": "^4.13.4",
-    "errorhandler": "^1.4.3"
+    "mongodb": "^2.1.7"
   }
 }

@@ -206,6 +206,8 @@ sudo restart YOUR_NODE_APP_SERVICE_NANE
 
 - add unit tests for server side code
 - add unit tests for client side code
+- add authentication and authorization
+- add [MongoDB]
 - maybe think everything as a single page application and just have a single *index.html*? (and just have an API on the server side and/or pre-rendered html)
 - add angular 2 and make it work (**whooohooo!**)
 - implement logging
@@ -239,3 +241,4 @@ But I do accept constructive feedback and suggestions.
 [Bower]: <http://bower.io/>
 [Microsoft Azure]: <https://azure.microsoft.com>
 [nginx]: <http://nginx.org/en/>
+[MongoDB]: <https://www.mongodb.org/>
