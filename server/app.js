@@ -3,11 +3,13 @@ var app = require("./config/appConfig");
 var envConfig = require("./config/envConfig");
 var errorHandler = require("errorhandler");
 var logger = require('./helpers/logger');
+var db = require('./data/helpers/mongoHelper');
 // error handlers
-var env = process.env.NODE_ENV || 'development';
-if (env === 'development') {
+if (envConfig.ENV === 'dev') {
     app.use(errorHandler());
 }
+db.set('test', 'abc');
+//console.log(db.get('test'));
 function normalizePort(val) {
     var port = parseInt(val, 10);
     if (isNaN(port)) {

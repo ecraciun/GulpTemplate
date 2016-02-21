@@ -3,13 +3,18 @@ import * as app from "./config/appConfig";
 import * as envConfig from "./config/envConfig";
 import errorHandler = require("errorhandler");
 import * as logger from './helpers/logger';
+import * as db from './data/helpers/mongoHelper';
+
 
 // error handlers
 
-var env = process.env.NODE_ENV || 'development';
-if (env === 'development') {
+if (envConfig.ENV === 'dev') {
     app.use(errorHandler());
 }
+
+db.set('test', 'abc');
+//console.log(db.get('test'));
+
 
 function normalizePort(val) {
   var port = parseInt(val, 10);
