@@ -168,6 +168,33 @@ $ restart nginx
 
 And that's it! For now, I kept it simple. I will probably change a few things here and there, but I'll update the documentation when the time comes.
 
+
+### Set up and install [MongoDB]
+
+You may follow the steps [here](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/) or just get the short version below:
+```sh
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+$ echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+$ sudo apt-get update
+$ sudo apt-get install -y mongodb-org
+$ sudo service mongod start 
+```
+*The last step, starting the service might not be necessary because for me it started automatically after the install.*
+
+Then configure the users:
+```sh
+# create main admin user
+$ mongo
+> use admin
+> db.createUser({user: "YOUR_ADMIN_USER", pwd:"YOUR_ADMIN_PASSWORD", roles:[{ role: "userAdminAnyDatabase", db: "admin"}]})
+> use gulptemplate
+> db.createUser({user: "YOUR_DB_OWNER", pwd:"YOUR_DB_OWNER_PASSWORD", roles:[{ role: "dbOwner", db: "gulptemplate"}]})
+> db.createUser({user: "YOUR_DB_USER", pwd:"YOUR_DB_USER_PASSWORD", roles:[{ role: "readWrite", db: "gulptemplate"}]})
+```
+
+>*If you want to be able to remotely connect to your mongodb instance, you must edit the /etc/mongd.conf file and comment out the line "bindIp: 127.0.0.1". And also remember to open up the port in your firewall.*
+
+
 ### Codeship: Test 
 
 **Be sure you have the user you are using to connect via SSH in the sudoers group with no password. Use _visudo_ to edit the configuration file.**
@@ -207,7 +234,6 @@ sudo restart YOUR_NODE_APP_SERVICE_NANE
 - add unit tests for server side code
 - add unit tests for client side code
 - add authentication and authorization
-- add [MongoDB] (needs to be configured)
 - maybe think everything as a single page application and just have a single *index.html*? (and just have an API on the server side and/or pre-rendered html)
 - add angular 2 and make it work (**whooohooo!**)
 - maybe have somne kind of an [Application Insights] telemetry data gathering, but for the current setup
