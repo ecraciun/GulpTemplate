@@ -3,12 +3,12 @@ import * as path from "path";
 import * as bodyParser from "body-parser";
 import * as logger from '../helpers/logger';
 import * as index from '../routes/index';
-
+var favicon = require('serve-favicon');
 
 var appConfig = express();
 
 // view engine setup
-appConfig.set('views', path.join(__dirname, 'views'));
+appConfig.set('views', path.join(__dirname, '/../views'));
 appConfig.set('view engine', 'ejs');
 //app.set('view options', { layout: false });
 
@@ -17,6 +17,7 @@ appConfig.use(bodyParser.json());
 
 // Routes
 
+appConfig.use(favicon(__dirname + '/../../client/images/favicon.ico'));
 appConfig.use('/assets', express.static(__dirname + '/../../client'));
 appConfig.use('/', index);
 

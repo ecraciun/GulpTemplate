@@ -55,6 +55,7 @@
     "express": "^4.13.4",
     "jsonwebtoken": "^5.7.0",
     "mongodb": "^2.1.7",
-    "mongoose": "^4.4.4"
+    "mongoose": "^4.4.4",
+    "serve-favicon": "^2.3.0"
   }
 }
