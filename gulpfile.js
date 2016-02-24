@@ -160,7 +160,7 @@ gulp.task('build:prod', function(cb){
     runSequence(
         'clean',
         ['less:prod', 'css:libs:prod', 'js:libs:prod', 'ts:prod'],
-        ['copy-package.json', 'copy-bootstrap-fonts', 'copy-views', 'copy-html'],
+        ['copy-package.json', 'copy-bootstrap-fonts', 'copy-views', 'copy-html', 'copy-images'],
         'build-prod-html',
         cb
     );
@@ -232,6 +232,10 @@ gulp.task('copy-html', function(cb){
         .pipe(gulp.dest('./dist/client')); 
 });
 
+gulp.task('copy-images', function(cb){
+    return gulp.src('./client/images/**/*.*')
+        .pipe(gulp.dest('./dist/client/images'));
+});
 
 gulp.task('build-prod-html', function(){
     var localInject = function(pathGlob, name) {
@@ -257,5 +261,5 @@ gulp.task('clean', function (cb) {
     //   return gulp.src('./**/*.js', { read: false }) // much faster
     //   .pipe(ignore('node_modules/**'))
     //   .pipe(rimraf());
-  
 });
+  
