@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "module": "system",
+        "module": "commonjs",
         "target": "es6",
         "noImplicitAny": false,
         "outDir": ".",
@@ -12,7 +12,6 @@
         "sourceMap": false
     },
     "exclude": [
-        "node_modules",
         "typings/browser",
         "typings/browser.d.ts"
     ]

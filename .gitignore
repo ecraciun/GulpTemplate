@@ -26,6 +26,8 @@ dist
 # Dependency directory
 node_modules
 bower_components
+server/typings
+client/typings
 typings
 
 # Optional npm cache directory

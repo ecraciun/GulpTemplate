@@ -19,23 +19,24 @@ System.register(['angular2/core', 'angular2/router'], function(exports_1) {
                 router_1 = router_1_1;
             }],
         execute: function() {
-            let AppComponent = class {
-                constructor() {
+            AppComponent = (function () {
+                function AppComponent() {
                     this.title = 'Tour of Heroes';
                 }
-            };
-            AppComponent = __decorate([
-                core_1.Component({
-                    selector: 'my-app',
-                    directives: [router_1.ROUTER_DIRECTIVES],
-                    template: '<h1> YAAAY FROM ANGULAR 2 </h1>',
-                    //templateUrl: '/app/app.component.html',
-                    //styleUrls: ['app/app.component.css'],
-                    providers: [router_1.ROUTER_PROVIDERS]
-                }), 
-                __metadata('design:paramtypes', [])
-            ], AppComponent);
-            AppComponent = AppComponent;
+                AppComponent = __decorate([
+                    core_1.Component({
+                        selector: 'my-app',
+                        directives: [router_1.ROUTER_DIRECTIVES],
+                        template: '<h1> YAAAY FROM ANGULAR 2 </h1>',
+                        //templateUrl: '/app/app.component.html',
+                        //styleUrls: ['app/app.component.css'],
+                        providers: [router_1.ROUTER_PROVIDERS]
+                    }), 
+                    __metadata('design:paramtypes', [])
+                ], AppComponent);
+                return AppComponent;
+            })();
+            exports_1("AppComponent", AppComponent);
         }
     }
 });

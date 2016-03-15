@@ -1,14 +1,10 @@
 import {User} from '../../../models/User';
 
-module RepositoryInterfaces{
-    export interface IUserRepository{
-        (user: User) : User; // create
-        (user: User) : User; // update
-        (id: string) : boolean; // delete
-        (id: string) : User; // find by id
-        () : User[]; // get all
-        (username: string, password: string) : boolean; // check credentials
-    }
+export interface IUserRepository{
+        Create(user: User) : User; // create
+        Update(user: User) : User; // update
+        Delete(id: string) : boolean; // delete
+        FindById(id: string) : User; // find by id
+        GetAll() : User[]; // get all
+        CheckCredentials(username: string, password: string) : boolean; // check credentials
 }
-
-export = RepositoryInterfaces;

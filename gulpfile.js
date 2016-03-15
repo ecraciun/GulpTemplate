@@ -19,7 +19,6 @@ var gulp        = require('gulp'),
     plumber     = require('gulp-plumber'),
     filter      = require('gulp-filter'),
     ts          = require('gulp-typescript'),
-    tsProject   = ts.createProject('tsconfig.json'),
     bowerFiles  = require('main-bower-files'),
     rev         = require('gulp-rev'),
     runSequence = require('run-sequence'),
@@ -96,12 +95,25 @@ gulp.task('less', function(cb) {
 });
 
 
-gulp.task('ts', function() {
-	var tsResult = tsProject.src() // instead of gulp.src(...) 
-		.pipe(ts(tsProject));
-	
-	return tsResult.js.pipe(gulp.dest('.'));
+gulp.task('ts:server', function(){
+    var tsProject = ts.createProject(path.resolve('./server/tsconfig.json'));
+    return gulp.src(path.resolve('./server/**/*.ts'))
+		.pipe(ts(tsProject))
+		.js
+		.pipe(gulp.dest(path.resolve('./server'))) 
 });
+
+
+gulp.task('ts:client', function(){
+    var tsProject = ts.createProject(path.resolve('./client/tsconfig.json'));
+    return gulp.src(path.resolve('./client/**/*.ts'))
+		.pipe(ts(tsProject))
+		.js
+		.pipe(gulp.dest(path.resolve('./client'))) 
+});
+
+
+gulp.task('ts', ['ts:server', 'ts:client']);
 
 
 gulp.task('watch:js', function(cb){
@@ -146,6 +158,7 @@ gulp.task('js:libs:dev', function(cb){
     files.push("./node_modules/rxjs/bundles/Rx.js");
     files.push("./node_modules/angular2/bundles/angular2.dev.js");
     files.push("./node_modules/angular2/bundles/router.dev.js");
+    console.log(files);
     return gulp.src(files)
         .pipe(filter(['*.js']))
         .pipe(gulp.dest('./client/app/libs'));
@@ -153,10 +166,10 @@ gulp.task('js:libs:dev', function(cb){
 
 
 gulp.task('build-dev-html', function(){  
-    return gulp.src('./client/index.html')
-        .pipe(inject(gulp.src('./client/css/**/*.css', { read:false }), { relative: true, addPrefix: 'assets' })) // css app files  
-        .pipe(inject(gulp.src('./client/app/**/*.js', { read: false }), { relative: true, addPrefix: 'assets' })) // js app files  
-        .pipe(gulp.dest('./client/'));
+    // return gulp.src('./client/index.html')
+    //     .pipe(inject(gulp.src('./client/css/**/*.css', { read:false }), { relative: true, addPrefix: 'assets' })) // css app files  
+    //     .pipe(inject(gulp.src('./client/app/**/*.js', { read: false }), { relative: true, addPrefix: 'assets' })) // js app files  
+    //     .pipe(gulp.dest('./client/'));
 });
 
 

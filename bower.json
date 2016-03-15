@@ -22,7 +22,8 @@
   ],
   "dependencies": {
     "bootstrap": "^3.3.6",
-    "moment": "^2.11.2"
+    "moment": "^2.11.2",
+    "jquery": "^2.2.1"
   },
   "overrides": {
     "bootstrap": {

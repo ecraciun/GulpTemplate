@@ -1,15 +1,21 @@
-System.register(['./interfaces/RepositoryInterfaces'], function(exports_1) {
-    var RepositoryInterfaces_1;
-    var UserRepository;
-    return {
-        setters:[
-            function (RepositoryInterfaces_1_1) {
-                RepositoryInterfaces_1 = RepositoryInterfaces_1_1;
-            }],
-        execute: function() {
-            class UserRepository extends RepositoryInterfaces_1.default.IUserRepository {
-            }
-            UserRepository = UserRepository;
-        }
+class UserRepository {
+    Create(user) {
+        return null;
     }
-});
+    Update(user) {
+        return null;
+    }
+    Delete(id) {
+        return null;
+    }
+    FindById(id) {
+        return null;
+    }
+    GetAll() {
+        return null;
+    }
+    CheckCredentials(username, password) {
+        return null;
+    }
+}
+exports.UserRepository = UserRepository;
