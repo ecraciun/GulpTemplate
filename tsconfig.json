@@ -1,10 +1,13 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
+        "module": "system",
         "target": "es6",
         "noImplicitAny": false,
         "outDir": ".",
         "rootDir": ".",
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
         "sourceMap": false
     },
     "exclude": [

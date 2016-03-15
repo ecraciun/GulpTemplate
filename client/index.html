@@ -1,23 +1,59 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <base href="/">
         <title>Gulptemplate</title>
-        <!--<link href="/assets/css/site.css" type="text/css" rel="stylesheet" />
-        <link href="/assets/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-        <link href="/assets/css/bootstrap-theme.min.css" type="text/css" rel="stylesheet" />-->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- 1. Load libraries -->
+        <!-- IE required polyfills, in this exact order -->
+        <script src="assets/app/libs/es6-shim/es6-shim.min.js"></script>
+        <script src="assets/app/libs/systemjs/dist/system-polyfills.js"></script>
+        <script src="assets/app/libs/angular2/es6/dev/src/testing/shims_for_IE.js"></script>   
+
+        <script src="assets/app/libs/angular2/bundles/angular2-polyfills.js"></script>
+        <script src="assets/app/libs/systemjs/dist/system.src.js"></script>
+        <script src="assets/app/libs/rxjs/bundles/Rx.js"></script>
+        <script src="assets/app/libs/angular2/bundles/angular2.dev.js"></script>
+        <script src="assets/app/libs/angular2/bundles/router.dev.js"></script>
         
         <!-- inject:js -->
-        <script src="assets/app/bootstrap.js"></script>
-        <script src="assets/app/moment.js"></script>
+        <script src="assets/app/app.component.js"></script>
+        <script src="assets/app/main.js"></script>
+        <script src="assets/app/libs/angular2-polyfills.js"></script>
+        <script src="assets/app/libs/angular2.dev.js"></script>
+        <script src="assets/app/libs/bootstrap.js"></script>
+        <script src="assets/app/libs/es6-shim.min.js"></script>
+        <script src="assets/app/libs/moment.js"></script>
+        <script src="assets/app/libs/router.dev.js"></script>
+        <script src="assets/app/libs/Rx.js"></script>
+        <script src="assets/app/libs/shims_for_IE.js"></script>
+        <script src="assets/app/libs/system-polyfills.js"></script>
+        <script src="assets/app/libs/system.src.js"></script>
         <!-- endinject -->
         
         <!-- inject:css -->
         <link rel="stylesheet" href="assets/css/bootstrap.css">
         <link rel="stylesheet" href="assets/css/site.css">
         <!-- endinject -->
+        
+        <script>
+            System.config({
+                packages: {        
+                    app: {
+                        format: 'register',
+                        defaultExtension: 'js'
+                    }
+                }
+            });
+            System.import('assets/app/main')
+                    .then(null, console.error.bind(console));
+        </script>
     </head>
     
     <body>
+        <my-app>Loading...</my-app>
+        
         <h1>It works!</h1>
         
         <div class="row">

@@ -137,9 +137,18 @@ gulp.task('css:libs:dev', function(cb){
 
 
 gulp.task('js:libs:dev', function(cb){
-   return gulp.src(bowerFiles())
+    var files = bowerFiles();
+    files.push("./node_modules/es6-shim/es6-shim.min.js");
+    files.push("./node_modules/systemjs/dist/system-polyfills.js");
+    files.push("./node_modules/angular2/es6/dev/src/testing/shims_for_IE.js");
+    files.push("./node_modules/angular2/bundles/angular2-polyfills.js");
+    files.push("./node_modules/systemjs/dist/system.src.js");
+    files.push("./node_modules/rxjs/bundles/Rx.js");
+    files.push("./node_modules/angular2/bundles/angular2.dev.js");
+    files.push("./node_modules/angular2/bundles/router.dev.js");
+    return gulp.src(files)
         .pipe(filter(['*.js']))
-        .pipe(gulp.dest('./client/app'));
+        .pipe(gulp.dest('./client/app/libs'));
 });
 
 
@@ -192,7 +201,16 @@ gulp.task('css:libs:prod', function(cb){
 
 
 gulp.task('js:libs:prod', function(cb){
-   return gulp.src(bowerFiles())
+    var files = bowerFiles();
+    files.push("./node_modules/es6-shim/es6-shim.min.js");
+    files.push("./node_modules/systemjs/dist/system-polyfills.js");
+    files.push("./node_modules/angular2/es6/dev/src/testing/shims_for_IE.js");
+    files.push("./node_modules/angular2/bundles/angular2-polyfills.js");
+    files.push("./node_modules/systemjs/dist/system.src.js");
+    files.push("./node_modules/rxjs/bundles/Rx.js");
+    files.push("./node_modules/angular2/bundles/angular2.dev.js");
+    files.push("./node_modules/angular2/bundles/router.dev.js");
+    return gulp.src(files)
         .pipe(filter(['*.js']))
         .pipe(concat('libs.min.js'))
         .pipe(uglify())
