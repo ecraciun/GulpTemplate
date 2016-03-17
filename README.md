@@ -15,7 +15,8 @@ I'm new to the whole MEAN stack so I'm taking one step at the time, starting wit
 
 ## Current features
 
-- typescript on server side code
+- typescript on server side code and on client side (combining these two gave me some headaches)
+- working [Angular 2] 
 - build for production task *$ gulp build:prod*
 - one awesome development gulp task that runs the server, watches and compiles less, typescript files, brings all library components from bower folder, injects every .css and .js file inside the index.html file  and reloads the browser
 
@@ -57,7 +58,11 @@ Just navigate to the project's root folder with your console and run these comma
 ```sh
 $ npm install
 $ bower install
+$ cd server
 $ typings install
+$ cd ../client
+$ typings install
+$ cd ..
 $ gulp start
 ```
 
@@ -231,11 +236,11 @@ sudo restart YOUR_NODE_APP_SERVICE_NANE
 
 *Not necessarily in this order. These are just some ideas so I don't forget.*
 
+- since I've added [Angular 2] on the client side, I had to go back and modify several [Gulp] tasks: there is no more Javascript libraries concatenation and injection into the html page for now since they must be added in the correct order in order for them to actually work; I might revisit this at some point in the future
 - add unit tests for server side code
 - add unit tests for client side code
 - add authentication and authorization
 - maybe think everything as a single page application and just have a single *index.html*? (and just have an API on the server side and/or pre-rendered html)
-- add angular 2 and make it work (**whooohooo!**)
 - maybe have somne kind of an [Application Insights] telemetry data gathering, but for the current setup
 - maybe make this as a [Yeoman] scaffolding template
 
@@ -243,7 +248,7 @@ sudo restart YOUR_NODE_APP_SERVICE_NANE
 
 - inject sensitive configuration data (like connection strings) into the application using the build server
 - make sure the build server will also run the tests (when they will be added)
-- prepare the "production" environment on my (hopefully) soon to be shipped [RaspberryPi 2]
+- prepare the "production" environment on my (hopefully) soon to be shipped [RaspberryPi 3]
 - make sure to use a Dynamic DNS service to update the IP (and make a chron script)
 
 
@@ -259,7 +264,7 @@ But I do accept constructive feedback and suggestions.
 [Typescript]: <https://www.npmjs.com/package/typescript>
 [Nodemon]: <https://www.npmjs.com/package/nodemon>
 [Typings]: <https://www.npmjs.com/package/typings>
-[RaspberryPi 2]: <https://www.raspberrypi.org/products/raspberry-pi-2-model-b/>
+[RaspberryPi 3]: <https://www.raspberrypi.org/products/raspberry-pi-3-model-b/>
 [Application Insights]: <https://azure.microsoft.com/en-us/services/application-insights/>
 [Codeship]: <https://codeship.com/>
 [Yeoman]: <http://yeoman.io/>
@@ -267,3 +272,4 @@ But I do accept constructive feedback and suggestions.
 [Microsoft Azure]: <https://azure.microsoft.com>
 [nginx]: <http://nginx.org/en/>
 [MongoDB]: <https://www.mongodb.org/>
+[Angular 2]: <https://angular.io/>

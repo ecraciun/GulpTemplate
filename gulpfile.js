@@ -80,14 +80,14 @@ gulp.task('nodemon', function (cb) {
 
 
 gulp.task('less', function(cb) {
-    return gulp.src('./client/css/**/*.less')
+    return gulp.src('./client/**/*.less')
         .pipe(plumber())
         .pipe(less({
             paths: [ path.join(__dirname, 'less', 'includes') ]
         }))
         .on('error', gutil.log)
-        .pipe(concat('site.css'))
-        .pipe(gulp.dest('./client/css'))
+        //.pipe(concat('site.css'))
+        .pipe(gulp.dest('./client'))
         .pipe(browserSync.reload({
             stream: true
         }))
@@ -132,7 +132,7 @@ gulp.task('watch:html', function(cb){
 
 
 gulp.task('watch:less', function() {
-    gulp.watch('./client/css/**/*.less', ['less']);
+    gulp.watch('./client/**/*.less', ['less']);
 });
 
 
@@ -158,7 +158,6 @@ gulp.task('js:libs:dev', function(cb){
     files.push("./node_modules/rxjs/bundles/Rx.js");
     files.push("./node_modules/angular2/bundles/angular2.dev.js");
     files.push("./node_modules/angular2/bundles/router.dev.js");
-    console.log(files);
     return gulp.src(files)
         .pipe(filter(['*.js']))
         .pipe(gulp.dest('./client/app/libs'));
@@ -166,10 +165,10 @@ gulp.task('js:libs:dev', function(cb){
 
 
 gulp.task('build-dev-html', function(){  
-    // return gulp.src('./client/index.html')
-    //     .pipe(inject(gulp.src('./client/css/**/*.css', { read:false }), { relative: true, addPrefix: 'assets' })) // css app files  
-    //     .pipe(inject(gulp.src('./client/app/**/*.js', { read: false }), { relative: true, addPrefix: 'assets' })) // js app files  
-    //     .pipe(gulp.dest('./client/'));
+    return gulp.src('./client/index.html')
+        .pipe(inject(gulp.src('./client/css/**/*.css', { read:false }), { relative: true, addPrefix: 'assets' })) // css app files  
+        //.pipe(inject(gulp.src('./client/app/libs/**/*.js', { read: false }), { relative: true, addPrefix: 'assets' })) // js app files  
+        .pipe(gulp.dest('./client/'));
 });
 
 
@@ -181,7 +180,7 @@ gulp.task('build-dev-html', function(){
 gulp.task('build:prod', function(cb){
     runSequence(
         'clean',
-        ['less:prod', 'css:libs:prod', 'js:libs:prod', 'ts:prod'],
+        ['less:prod', 'css:libs:prod', 'js:libs:prod', 'ts:prod:server', 'ts:prod:client'],
         ['copy-package.json', 'copy-bootstrap-fonts', 'copy-views', 'copy-html', 'copy-images'],
         'build-prod-html',
         cb
@@ -190,16 +189,16 @@ gulp.task('build:prod', function(cb){
 
     
 gulp.task('less:prod', function(cb) {
-    return gulp.src('./client/css/**/*.less')
+    return gulp.src('./client/**/*.less')
         .pipe(plumber())
         .pipe(less({
             paths: [ path.join(__dirname, 'less', 'includes') ]
         }))
         .on('error', gutil.log)
-        .pipe(concat('site.min.css'))
+        //.pipe(concat('site.min.css'))
         .pipe(cssnano())
-        .pipe(rev())
-        .pipe(gulp.dest('./dist/client/css'));
+        //.pipe(rev())
+        .pipe(gulp.dest('./dist/client'));
 });   
 
 
@@ -225,18 +224,28 @@ gulp.task('js:libs:prod', function(cb){
     files.push("./node_modules/angular2/bundles/router.dev.js");
     return gulp.src(files)
         .pipe(filter(['*.js']))
-        .pipe(concat('libs.min.js'))
+        //.pipe(concat('libs.min.js'))
         .pipe(uglify())
-        .pipe(rev())
-        .pipe(gulp.dest('./dist/client/app'));
+        //.pipe(rev())
+        .pipe(gulp.dest('./dist/client/app/libs'));
 });
 
 
-gulp.task('ts:prod', function() {
-	var tsResult = tsProject.src() // instead of gulp.src(...) 
-		.pipe(ts(tsProject));
-	
-	return tsResult.js.pipe(gulp.dest('./dist'));
+gulp.task('ts:prod:server', function(){
+    var tsProject = ts.createProject(path.resolve('./server/tsconfig.json'));
+    return gulp.src(path.resolve('./server/**/*.ts'))
+		.pipe(ts(tsProject))
+		.js
+		.pipe(gulp.dest(path.resolve('./dist/server'))) 
+});
+
+
+gulp.task('ts:prod:client', function(){
+    var tsProject = ts.createProject(path.resolve('./client/tsconfig.json'));
+    return gulp.src(path.resolve('./client/**/*.ts'))
+		.pipe(ts(tsProject))
+		.js
+		.pipe(gulp.dest(path.resolve('./dist/client'))) 
 });
 
 
@@ -282,7 +291,7 @@ gulp.task('build-prod-html', function(){
     
     return gulp.src('./client/index.html')
         .pipe(localInject('./dist/client/css/*.css')) // css files   
-        .pipe(localInject('./dist/client/app/*.js')) // js files            
+        //.pipe(localInject('./dist/client/app/*.js')) // js files            
         .pipe(gulp.dest('./dist/client/'));
 });
 
