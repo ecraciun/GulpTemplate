@@ -1,6 +1,6 @@
 import {IUser} from '../../models/IUser';
 import {IUserRepository} from './interfaces/RepositoryInterfaces';
-var mongoose = require("mongoose");
+import * as mongoose from 'mongoose';
 
 interface IUserModel extends IUser, mongoose.Document { }
 

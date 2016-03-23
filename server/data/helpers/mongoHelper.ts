@@ -1,5 +1,4 @@
-//import * as mongoose from 'mongoose';
-var mongoose = require("mongoose");
+import * as mongoose from 'mongoose';
 import * as envConfig from '../../config/envConfig';
 import * as logger from '../../helpers/logger';
 
