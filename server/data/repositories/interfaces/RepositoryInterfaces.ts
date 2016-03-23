@@ -1,10 +1,10 @@
-import {User} from '../../../models/User';
+import {IUser} from '../../../models/IUser';
 
 export interface IUserRepository{
-        Create(user: User) : User; // create
-        Update(user: User) : User; // update
+        Create(user: IUser) : IUser; // create
+        Update(user: IUser) : IUser; // update
         Delete(id: string) : boolean; // delete
-        FindById(id: string) : User; // find by id
-        GetAll() : User[]; // get all
+        FindById(id: string) : IUser; // find by id
+        GetAll() : IUser[]; // get all
         CheckCredentials(username: string, password: string) : boolean; // check credentials
 }

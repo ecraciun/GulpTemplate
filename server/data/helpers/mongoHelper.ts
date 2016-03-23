@@ -17,21 +17,23 @@ db.once('open', function() {
   
   console.log("Connection to mongodb opened");
   
-  var userSchema = mongoose.Schema({
-    username: String    
-  });
-  var User = mongoose.model('User', userSchema);
   
-  var testUser = new User({username: 'Gigel'});
-  testUser.save(function(err, user){
-     if(err){
-         logger.error(err);
-     } 
-     else{
-         console.log(JSON.stringify(user));
+  
+//   var userSchema = mongoose.Schema({
+//     username: String    
+//   });
+//   var User = mongoose.model('User', userSchema);
+  
+//   var testUser = new User({username: 'Gigel'});
+//   testUser.save(function(err, user){
+//      if(err){
+//          logger.error(err);
+//      } 
+//      else{
+//          console.log(JSON.stringify(user));
          
-     }
-  });
+//      }
+//   });
 });
 
 export = mongoose;
