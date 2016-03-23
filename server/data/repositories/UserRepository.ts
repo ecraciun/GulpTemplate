@@ -1,7 +1,7 @@
 "use strict";
 
 import {IUser} from '../../models/IUser';
-import {IUserRepository} from './interfaces/RepositoryInterfaces';
+import {IUserRepository} from './interfaces/IUserRepository';
 import * as mongoose from '../helpers/mongoHelper';
 import * as logger from '../../helpers/logger';
 
