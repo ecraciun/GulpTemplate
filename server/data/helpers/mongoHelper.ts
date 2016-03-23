@@ -37,3 +37,8 @@ db.once('open', function() {
 });
 
 export = mongoose;
+
+// https://github.com/Appsilon/styleguide/wiki/mongoose-typescript-models
+// https://gist.github.com/masahirompp/3c012c8721b70821fa45
+// http://onoffswitch.net/mongoose-with-typescript/
+// https://www.google.ro/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=moongoose%20and%20typescript
