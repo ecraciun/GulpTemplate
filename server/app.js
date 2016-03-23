@@ -1,10 +1,9 @@
-"use strict";
-const http = require("http");
-const app = require("./config/appConfig");
-const envConfig = require("./config/envConfig");
-const errorHandler = require("errorhandler");
-const logger = require('./helpers/logger');
-const db = require('./data/helpers/mongoHelper');
+var http = require("http");
+var app = require("./config/appConfig");
+var envConfig = require("./config/envConfig");
+var errorHandler = require("errorhandler");
+var logger = require('./helpers/logger');
+var db = require('./data/helpers/mongoHelper');
 // error handlers
 if (envConfig.ENV === 'dev') {
     app.use(errorHandler());

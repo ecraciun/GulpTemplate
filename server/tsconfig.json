@@ -9,7 +9,7 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "removeComments": false,
-        "sourceMap": false
+        "sourceMap": true
     },
     "exclude": [
         "typings/browser",

@@ -5,6 +5,6 @@ export interface IUserRepository{
         Update(user: IUser) : IUser; // update
         Delete(id: string) : boolean; // delete
         FindById(id: string) : IUser; // find by id
-        GetAll() : IUser[]; // get all
+        GetAll() : Promise<IUser[]>; // get all
         CheckCredentials(username: string, password: string) : boolean; // check credentials
 }

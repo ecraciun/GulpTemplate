@@ -3,6 +3,7 @@ import * as path from "path";
 import * as bodyParser from "body-parser";
 import * as logger from '../helpers/logger';
 import * as index from '../routes/index';
+import * as users from '../routes/api/Users';
 var favicon = require('serve-favicon');
 
 var appConfig = express();
@@ -20,6 +21,7 @@ appConfig.use(bodyParser.json());
 appConfig.use(favicon(__dirname + '/../../client/images/favicon.ico'));
 appConfig.use('/assets', express.static(__dirname + '/../../client'));
 appConfig.use('/', index);
+appConfig.use('/users', users);
 
 // catch 404 and forward to error handler
 appConfig.use(function(req, res, next) {
