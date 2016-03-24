@@ -209,8 +209,14 @@ nvm install 5.6
 npm install typescript -g
 npm install gulp -g
 npm install bower -g
+npm install typings -g
 bower install
 npm install
+cd server
+typings i
+cd ../client
+typings i
+cd ..
 gulp build:prod
 # actual tests will come later, for now just build everything for production
 ```
@@ -237,6 +243,7 @@ sudo restart YOUR_NODE_APP_SERVICE_NANE
 *Not necessarily in this order. These are just some ideas so I don't forget.*
 
 - since I've added [Angular 2] on the client side, I had to go back and modify several [Gulp] tasks: there is no more Javascript libraries concatenation and injection into the html page for now since they must be added in the correct order in order for them to actually work; I might revisit this at some point in the future
+- make everything HTTPS
 - add unit tests for server side code
 - add unit tests for client side code
 - add authentication and authorization
