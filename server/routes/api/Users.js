@@ -1,7 +1,6 @@
-"use strict";
-const express = require("express");
-const UserRepository = require('../../data/repositories/UserRepository');
-const logger = require('../../helpers/logger');
+var express = require("express");
+var UserRepository = require('../../data/repositories/UserRepository');
+var logger = require('../../helpers/logger');
 var router = express.Router();
 var userRepo = new UserRepository.UserRepository();
 router.get('/', function (req, res, next) {
@@ -14,4 +13,3 @@ router.get('/', function (req, res, next) {
     });
 });
 module.exports = router;
-//# sourceMappingURL=Users.js.map

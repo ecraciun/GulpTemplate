@@ -1,5 +1,5 @@
 "use strict";
-const mongoose = require('../helpers/mongoHelper');
+var mongoose = require('../helpers/mongoHelper');
 var userSchema = new mongoose.Schema({
     Id: {
         type: mongoose.Schema.Types.ObjectId
@@ -45,4 +45,3 @@ class UserRepository {
     }
 }
 exports.UserRepository = UserRepository;
-//# sourceMappingURL=UserRepository.js.map

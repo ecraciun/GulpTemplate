@@ -1,10 +1,9 @@
-"use strict";
-const express = require("express");
-const path = require("path");
-const bodyParser = require("body-parser");
-const logger = require('../helpers/logger');
-const index = require('../routes/index');
-const users = require('../routes/api/Users');
+var express = require("express");
+var path = require("path");
+var bodyParser = require("body-parser");
+var logger = require('../helpers/logger');
+var index = require('../routes/index');
+var users = require('../routes/api/Users');
 var favicon = require('serve-favicon');
 var appConfig = express();
 // view engine setup
@@ -25,4 +24,3 @@ appConfig.use(function (req, res, next) {
     next(err);
 });
 module.exports = appConfig;
-//# sourceMappingURL=appConfig.js.map

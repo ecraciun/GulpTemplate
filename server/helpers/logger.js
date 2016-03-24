@@ -1,6 +1,5 @@
-"use strict";
-const bunyan = require('bunyan');
-const envConfig = require('../config/envConfig');
+var bunyan = require('bunyan');
+var envConfig = require('../config/envConfig');
 var logger = bunyan.createLogger({
     name: 'gulptemplate',
     src: envConfig.ENV === 'dev' ? true : false,
@@ -12,4 +11,3 @@ var logger = bunyan.createLogger({
         }]
 });
 module.exports = logger;
-//# sourceMappingURL=logger.js.map

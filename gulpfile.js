@@ -97,7 +97,7 @@ gulp.task('less', function(cb) {
 
 gulp.task('ts:server', function(){
     var tsProject = ts.createProject(path.resolve('./server/tsconfig.json'));
-    return gulp.src(path.resolve('./server/**/*.ts'))
+    return tsProject.src()
 		.pipe(ts(tsProject))
 		.js
 		.pipe(gulp.dest(path.resolve('./server'))) 
@@ -106,7 +106,7 @@ gulp.task('ts:server', function(){
 
 gulp.task('ts:client', function(){
     var tsProject = ts.createProject(path.resolve('./client/tsconfig.json'));
-    return gulp.src(path.resolve('./client/**/*.ts'))
+    return tsProject.src()
 		.pipe(ts(tsProject))
 		.js
 		.pipe(gulp.dest(path.resolve('./client'))) 
@@ -233,7 +233,7 @@ gulp.task('js:libs:prod', function(cb){
 
 gulp.task('ts:prod:server', function(){
     var tsProject = ts.createProject(path.resolve('./server/tsconfig.json'));
-    return gulp.src(path.resolve('./server/**/*.ts'))
+    return tsProject.src()
 		.pipe(ts(tsProject))
 		.js
 		.pipe(gulp.dest(path.resolve('./dist/server'))) 
@@ -242,7 +242,7 @@ gulp.task('ts:prod:server', function(){
 
 gulp.task('ts:prod:client', function(){
     var tsProject = ts.createProject(path.resolve('./client/tsconfig.json'));
-    return gulp.src(path.resolve('./client/**/*.ts'))
+    return tsProject.src()
 		.pipe(ts(tsProject))
 		.js
 		.pipe(gulp.dest(path.resolve('./dist/client'))) 
