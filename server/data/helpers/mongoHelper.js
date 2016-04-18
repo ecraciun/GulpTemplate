@@ -1,6 +1,7 @@
-var mongoose = require('mongoose');
-var envConfig = require('../../config/envConfig');
-var logger = require('../../helpers/logger');
+"use strict";
+const mongoose = require('mongoose');
+const envConfig = require('../../config/envConfig');
+const logger = require('../../helpers/logger');
 mongoose.connect(envConfig.MONGO_URI, function (err) {
     logger.error(err);
 });

@@ -1,5 +1,5 @@
 "use strict";
-var mongoose = require('../helpers/mongoHelper');
+const mongoose = require('../helpers/mongoHelper');
 var userSchema = new mongoose.Schema({
     Id: {
         type: mongoose.Schema.Types.ObjectId
