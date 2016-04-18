@@ -1,0 +1,23 @@
+To do:
+- sets
+    - list sets
+    - create set
+    - edit set
+    - publish / unpublish set
+    - delete set
+    - add photos
+    - remove photos
+    - edit photo description and title
+    - show / hide photos
+- account management
+    - register
+    - log in
+    - log out
+    - edit profile
+    - change password
+    - recover password
+- users
+    - list
+    - enable / disable
+
+Done:

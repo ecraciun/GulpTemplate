@@ -1,0 +1,24 @@
+To do:
+- users repository
+    - register
+    - login
+    - logout
+    - change password
+    - forgot password
+    - edit profile
+    - list users
+    - disable/enable users
+- sets repository
+    - create set
+    - edit set (description, title, etc.)
+    - publish / unpublish set
+    - delete set 
+    - add photos
+    - edit photo metadata (title, description)
+    - remove photos
+    - show / hide photos (?)
+- authentication
+- authorization
+
+
+Done:
