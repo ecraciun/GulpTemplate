@@ -102,6 +102,12 @@ $ editor ~/.ssh/authorized_keys
 
 This will allow Codeship to run commands automatically on your server without a password.
 
+#### Install Node.js
+```sh
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
+
 #### Set up service for your nodejs app
 
 ```sh
@@ -205,7 +211,7 @@ $ mongo
 **Be sure you have the user you are using to connect via SSH in the sudoers group with no password. Use _visudo_ to edit the configuration file.**
 
 ```sh
-nvm install 5.6
+nvm install 6.1
 npm install typescript -g
 npm install gulp -g
 npm install bower -g
